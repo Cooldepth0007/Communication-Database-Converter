@@ -1,171 +1,65 @@
-# Communication-Database-Converter
-## Overview
+# Communication Database Converter
 
-Communication Database Converter is a standalone desktop application designed for automotive engineers, system engineers, network architects, validation engineers, calibration engineers, and AUTOSAR developers to efficiently convert communication database files into structured Excel and CSV formats.
+Standalone Windows desktop application for converting automotive communication databases into Excel or CSV.
 
-The tool simplifies the analysis and documentation of vehicle communication networks by extracting communication data from multiple automotive network description formats and exporting it into easily readable and shareable spreadsheets.
+Supported inputs:
 
-The application is developed as a portable Windows executable and can be used without installing Python or additional dependencies.
+- DBC for CAN and CAN FD
+- AUTOSAR ARXML
+- Generic XML communication descriptions
+- FlexRay FIBEX
+- LIN LDF
 
----
+## Features
 
-## Key Features
+- PySide6 desktop UI with drag-and-drop batch input
+- Excel export with separate worksheets for network summary, messages/frames, signals, ECUs/nodes, diagnostics, and errors/warnings
+- CSV export with one file per section
+- Worker-thread conversion so the UI remains responsive
+- Defensive validation and error logging to `Converter_Log.txt`
+- Preview table with search/filter
+- Remembered last output location
+- Light and dark modes
 
-### Supported Input Formats
+## Project Layout
 
-The tool supports parsing and conversion of:
+```text
+communication_database_converter/
+  ui/
+  parsers/
+  exporters/
+  utils/
+main.py
+requirements.txt
+build_windows.ps1
+communication_database_converter.spec
+tests/
+sample_data/
+```
 
-* DBC (CAN and CAN FD)
-* AUTOSAR ARXML
-* XML Communication Files
-* FlexRay FIBEX
-* LIN Description Files (LDF)
+## Development
 
-### Supported Output Formats
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python main.py
+```
 
-* Microsoft Excel (.xlsx)
-* CSV (.csv)
+## Build Portable EXE
 
-### Communication Data Extraction
+```powershell
+.\build_windows.ps1
+```
 
-The converter extracts key communication information including:
+Or directly:
 
-#### CAN / CAN FD
+```powershell
+pyinstaller --onefile --windowed --name "Communication Database Converter" main.py
+```
 
-* Network Information
-* Message Definitions
-* Message IDs
-* DLC
-* Cycle Times
-* Transmitters and Receivers
-* Signal Definitions
-* Scaling and Offset
-* Units
-* Multiplexed Signals
+The executable is written to `dist\Communication Database Converter.exe` and can run on Windows 10/11 without a Python installation.
 
-#### AUTOSAR ARXML
+## Notes for Industrial Use
 
-* Communication Clusters
-* Frames and PDUs
-* Signals
-* Data Types
-* Sender/Receiver Relationships
-* Compu Methods
-* Initial Values
-* Communication Parameters
-
-#### FlexRay FIBEX
-
-* Clusters
-* Channels
-* Frames
-* Slot Information
-* Cycles
-* Signals
-* Sender and Receiver Mapping
-
-#### LIN LDF
-
-* LIN Clusters
-* Frames
-* Publishers
-* Subscribers
-* Signals
-* Schedule Tables
-
----
-
-## Excel Export Structure
-
-Generated Excel files can include:
-
-* Network Summary
-* Messages / Frames
-* Signals
-* Nodes / ECUs
-* Diagnostics Information
-* Errors and Warnings
-
----
-
-## User-Friendly Interface
-
-* Modern graphical user interface
-* Drag-and-drop file support
-* Batch file conversion
-* Progress tracking
-* Conversion logs
-* Output location selection
-* File validation and error reporting
-
----
-
-## Industrial Use Cases
-
-This tool can be used for:
-
-* Communication Matrix Generation
-* Network Architecture Analysis
-* AUTOSAR Communication Review
-* Signal Database Documentation
-* Vehicle Integration Activities
-* ECU Interface Analysis
-* System Validation Preparation
-* Calibration and Testing Support
-* Communication Database Comparison
-* Supplier/OEM Data Exchange
-
----
-
-## Benefits
-
-* Eliminates manual extraction of communication data
-* Reduces engineering effort and documentation time
-* Supports multiple automotive communication standards
-* Generates structured reports for analysis and reviews
-* Simplifies communication database management
-* Enables quick conversion of large communication files
-
----
-
-## Technology Stack
-
-Built using:
-
-* Python
-* PySide6 / PyQt6
-* Pandas
-* OpenPyXL
-* Cantools
-* lxml
-* XML Parsing Libraries
-
-Packaged as a standalone Windows executable using PyInstaller.
-
----
-
-## Target Users
-
-* Automotive System Engineers
-* Network Communication Engineers
-* AUTOSAR Engineers
-* Software Integration Engineers
-* Validation & Verification Engineers
-* Calibration Engineers
-* Test Engineers
-* Vehicle Architecture Engineers
-* Functional Safety Engineers
-* Technical Project Teams
-
----
-
-## License
-
-This project is intended to support automotive communication engineering workflows and can be adapted for OEM, Tier-1, and engineering service applications. it is still underdevelopment
-
-Contributions, feature requests, and improvements are welcome.
-
----
-
-**Communication Database Converter** – A professional utility for converting CAN, CAN FD, LIN, FlexRay, and AUTOSAR communication databases into engineer-friendly Excel and CSV reports.
-
+DBC parsing uses `cantools` for high-fidelity extraction. ARXML, XML, and FIBEX are namespace-tolerant and intentionally defensive because OEM/vendor schemas vary heavily. For unsupported or incomplete schema details, the converter records warnings instead of crashing. Very large files should be processed from local disk for best performance.
