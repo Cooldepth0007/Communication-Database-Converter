@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>SamplePackage</SHORT-NAME>
+      <ELEMENTS>
+        <CAN-CLUSTER>
+          <SHORT-NAME>CAN_Cluster</SHORT-NAME>
+        </CAN-CLUSTER>
+        <CAN-FRAME>
+          <SHORT-NAME>VehicleStatusFrame</SHORT-NAME>
+          <FRAME-LENGTH>8</FRAME-LENGTH>
+        </CAN-FRAME>
+        <I-SIGNAL>
+          <SHORT-NAME>VehicleSpeed</SHORT-NAME>
+          <LENGTH>16</LENGTH>
+          <UNIT-REF>/Units/kmh</UNIT-REF>
+        </I-SIGNAL>
+        <ECU-INSTANCE>
+          <SHORT-NAME>Gateway</SHORT-NAME>
+        </ECU-INSTANCE>
+      </ELEMENTS>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

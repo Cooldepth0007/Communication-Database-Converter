@@ -1,0 +1,25 @@
+LIN_protocol_version = "2.2";
+LIN_language_version = "2.2";
+
+Nodes {
+  Master: MasterNode, 5 ms, 0.1 ms ;
+  Slaves: DoorNode ;
+}
+
+Signals {
+  DoorState: 2, 0;
+  WindowPosition: 8, 0;
+}
+
+Frames {
+  DoorStatus: 0x12, DoorNode, 2 {
+    DoorState, 0;
+    WindowPosition, 8;
+  }
+}
+
+Schedule_tables {
+  NormalTable {
+    DoorStatus delay 10 ms;
+  }
+}

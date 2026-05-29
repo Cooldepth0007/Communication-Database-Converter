@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FIBEX>
+  <CLUSTER><SHORT-NAME>FlexRayCluster</SHORT-NAME></CLUSTER>
+  <FRAME>
+    <SHORT-NAME>FR_Static_Frame</SHORT-NAME>
+    <SLOT-ID>5</SLOT-ID>
+    <CYCLE>1</CYCLE>
+    <BYTE-LENGTH>16</BYTE-LENGTH>
+  </FRAME>
+  <SIGNAL>
+    <SHORT-NAME>SteeringAngle</SHORT-NAME>
+    <BIT-LENGTH>16</BIT-LENGTH>
+    <OFFSET>0</OFFSET>
+  </SIGNAL>
+</FIBEX>
